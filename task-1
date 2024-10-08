@@ -1,0 +1,39 @@
+import random
+
+def guessing_game():
+    number_to_guess = random.randint(1, 100)
+    attempts = 5
+
+    print("Welcome to the Guessing Game!")
+    print("I'm thinking of a number between 1 and 100.")
+    print(f"You have {attempts} attempts to guess it.")
+
+    while attempts > 0:
+        guess = input("Enter your guess: ")
+        
+      
+        if not guess.isdigit():
+            print("Please enter a valid number.")
+            continue
+        
+        guess = int(guess)
+        
+        if guess < 1 or guess > 100:
+            print("Please guess a number within the range 1 to 100.")
+            continue
+
+        if guess == number_to_guess:
+            print("Correct! You've guessed the number!")
+            break
+        elif guess < number_to_guess:
+            print("Too low!")
+        else:
+            print("Too high!")
+
+        attempts -= 1
+        print(f"You have {attempts} attempts left.")
+
+    if attempts == 0:
+        print(f"Sorry, you've run out of attempts. The number was {number_to_guess}.")
+
+guessing_game()
