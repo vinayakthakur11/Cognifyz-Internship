@@ -1,39 +1,30 @@
-import java.util.Random;
-import java.util.Scanner;
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
-public class GuessingGame {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-        
-        int numberToGuess = random.nextInt(100) + 1;
-        int attempts = 0;
-        boolean guessedCorrectly = false;
+using namespace std;
 
-        System.out.println("Welcome to the Guessing Game!");
+int main() {
+    srand(time(0)); 
 
-        while (!guessedCorrectly) {
-            System.out.print("Please enter your guess (1-100): ");
-            try {
-                int playerGuess = scanner.nextInt();
-                attempts++;
+    int randomNumber = rand() % 100 + 1;  
+    int guess;
 
-                if (playerGuess < 1 || playerGuess > 100) {
-                    System.out.println("Your guess is out of bounds. Please guess a number between 1 and 100.");
-                } else if (playerGuess < numberToGuess) {
-                    System.out.println("Too low! Try again.");
-                } else if (playerGuess > numberToGuess) {
-                    System.out.println("Too high! Try again.");
-                } else {
-                    System.out.println("Congratulations! You've guessed the correct number " + numberToGuess + " in " + attempts + " attempts.");
-                    guessedCorrectly = true;
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid input! Please enter a number.");
-                scanner.next();
-            }
+    cout << "Welcome to the Guessing Game!" << endl;
+    cout << "I'm thinking of a number between 1 and 100. Can you guess it?" << endl;
+
+    do {
+        cout << "Enter your guess: ";
+        cin >> guess;
+
+        if (guess < randomNumber) {
+            cout << "Too low! Try again." << endl;
+        } else if (guess > randomNumber) {
+            cout << "Too high! Try again." << endl;
+        } else {
+            cout << "Congratulations! You guessed the number correctly." << endl;
         }
+    } while (guess != randomNumber);
 
-        scanner.close();
-    }
+    return 0;
 }
