@@ -1,0 +1,114 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Task {
+public:
+    int id;
+    string description;
+    bool isCompleted;
+
+    Task(int id, string description) : id(id), description(description), isCompleted(false) {}
+};
+
+class TaskManager {
+private:
+    vector<Task> tasks;
+    int nextId;
+
+public:
+    TaskManager() : nextId(1) {}
+
+    void createTask(string description) {
+        tasks.push_back(Task(nextId++, description));
+        cout << "Task created successfully." << endl;
+    }
+
+    void readTasks() {
+        if (tasks.empty()) {
+            cout << "No tasks found." << endl;
+        } else {
+            cout << "Task List:" << endl;
+            for (const Task& task : tasks) {
+                cout << "ID: " << task.id << ", Description: " << task.description << ", Completed: " << (task.isCompleted ? "Yes" : "No") << endl;
+            }
+        }
+    }
+
+    void updateTask(int id, string newDescription) {
+        for (Task& task : tasks) {
+            if (task.id == id) {
+                task.description = newDescription;
+                cout << "Task updated successfully." << endl;
+                return;
+            }
+        }
+        cout << "Task not found." << endl;
+    }
+
+    void deleteTask(int id) {
+        for (auto it = tasks.begin(); it != tasks.end(); ++it) {
+            if (it->id == id) {
+                tasks.erase(it);
+                cout << "Task deleted successfully." << endl;
+                return;
+            }
+        }
+        cout << "Task not found." << endl;
+    }
+};
+
+int main() {
+    TaskManager taskManager;
+    int choice;
+
+    while (true) {
+        cout << "\nTask Manager\n";
+        cout << "1. Create Task\n";
+        cout << "2. Read Tasks\n";
+        cout << "3. Update Task\n";
+        cout << "4. Delete Task\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                string description;
+                cout << "Enter task description: ";
+                cin.ignore();
+                getline(cin, description);
+                taskManager.createTask(description);
+                break;
+            }
+            case 2:
+                taskManager.readTasks();
+                break;
+            case 3: {
+                int id;
+                string newDescription;
+                cout << "Enter task ID to update: ";
+                cin >> id;
+                cout << "Enter new description: ";
+                cin.ignore();
+                getline(cin, newDescription);
+                taskManager.updateTask(id, newDescription);
+                break;
+            }
+            case 4: {
+                int id;
+                cout << "Enter task ID to delete: ";
+                cin >> id;
+                taskManager.deleteTask(id);
+                break;
+            }
+            case 5:
+                cout << "Exiting...\n";
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    }
+}
